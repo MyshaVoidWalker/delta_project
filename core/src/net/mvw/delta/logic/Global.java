@@ -41,13 +41,13 @@ public class Global {
      * Represents a game state.
      */
     public  enum GameState{
-        INTRO, MENU_MAIN, MENU_OPTIONS,MENU_EXTRAS,MENU_ACHIEVEMENTS,MENU_CREDITS,GAME,GAME_PROGRESS, GAME_END
+        INTRO, MENU_MAIN, MENU_OPTIONS,MENU_EXTRAS,MENU_ACHIEVEMENTS,MENU_CREDITS,GAME,GAME_PROGRESS, GAME_END, NEUTRAL
     }
 
     /**
      * The game state.
      */
-    public static GameState state = GameState.INTRO;
+    public static GameState state = GameState.MENU_MAIN;
 
     /**
      * The layout.

@@ -43,8 +43,8 @@ public class IntroController {
         gamefont.getData().setScale(2);
         layout.setText(gamefont,introText);
         gamefont.draw(batch,introText,SCREEN_WIDTH/2 - layout.width/2, SCREEN_HEIGHT/2 - logo.getTexture().getHeight() - layout.height*2);
-        batch.draw(side, -side_size / 2 - (InputBox.xScreenOffset+side_size/2)*(float)((Math.PI-angleAlpha)/(Math.PI - Math.PI/alphaits)), -InputBox.yScreenOffset, side_size, viewportHeight);
-        batch.draw(side, SCREEN_WIDTH - side_size / 2 + (InputBox.xScreenOffset+side_size/2)*(float)((Math.PI-angleAlpha)/(Math.PI - Math.PI/alphaits)), -InputBox.yScreenOffset, side_size, viewportHeight);
+        batch.draw(side, -side_size / 2 - (InputBox.xScreenOffset+side_size/2)*(float)((Math.PI- Math.PI/alphaits-angleAlpha)/(Math.PI - Math.PI/alphaits)), -InputBox.yScreenOffset, side_size, viewportHeight);
+        batch.draw(side, SCREEN_WIDTH - side_size / 2 + (InputBox.xScreenOffset+side_size/2)*(float)((Math.PI- Math.PI/alphaits-angleAlpha)/(Math.PI - Math.PI/alphaits)), -InputBox.yScreenOffset, side_size, viewportHeight);
         batch.end();
 
         angleAlpha += (float)Math.PI/alphaits *getDelta();
@@ -53,6 +53,7 @@ public class IntroController {
 
         if(angleAlpha> Math.PI - Math.PI/alphaits){
             gamefont.getData().setScale(1);
+            MenuController.init();
             state = MENU_MAIN;
         }
     }

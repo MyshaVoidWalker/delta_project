@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import net.mvw.delta.input.InputBox;
 import net.mvw.delta.logic.Global;
 import net.mvw.delta.states.controllers.IntroController;
+import net.mvw.delta.states.controllers.MenuController;
 
 import static net.mvw.delta.ProjectDelta.SCREEN_HEIGHT;
 import static net.mvw.delta.ProjectDelta.SCREEN_WIDTH;
@@ -17,7 +18,7 @@ import static net.mvw.delta.input.InputBox.continualInputs;
 import static net.mvw.delta.input.Resources.background;
 import static net.mvw.delta.input.Resources.side;
 import static net.mvw.delta.logic.Global.state;
-import static net.mvw.delta.logic.Global.timePassed;
+import static net.mvw.delta.logic.Global.*;
 
 
 public class MainLogic {
@@ -43,7 +44,7 @@ public class MainLogic {
     public static void init(SpriteBatch batch) {
 
         IntroController.init();
-        //MenuController.init();
+        MenuController.init();
         //GameController.init();
 
 
@@ -59,7 +60,7 @@ public class MainLogic {
         updateCameraPosition();
 
 
-//        if (state != GameState.INTRO && state != GameState.GAME_PROGRESS) MenuController.update();
+        if (state != GameState.INTRO && state != GameState.GAME_PROGRESS) MenuController.update();
 //        if (state == GameState.GAME || state == GameState.GAME_PROGRESS || state == GameState.GAME_BUILDINGS)
 //            GameController.update();
     }
@@ -92,7 +93,7 @@ public class MainLogic {
 
             case MENU_ACHIEVEMENTS:
             case MENU_CREDITS:
-                //MenuController.draw(batch);
+                MenuController.draw(batch);
                 break;
 
             case GAME:
