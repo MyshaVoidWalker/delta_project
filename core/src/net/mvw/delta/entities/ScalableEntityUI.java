@@ -29,7 +29,7 @@ import static net.mvw.delta.logic.Global.state;
  */
 public class ScalableEntityUI {
 
-    private static float menuButtonDistance = 60;
+    public static float menuButtonDistance = 32;
 
     public float targetZoom, fullZoom, speedOfScale,position;
     public boolean hovered = false;
@@ -65,7 +65,7 @@ public class ScalableEntityUI {
         if (text != null) setText(text);
 
 
-        this.getSprite().setPosition(SCREEN_WIDTH/2-this.sprite.getWidth()/2,SCREEN_HEIGHT/4*3-256 - position*menuButtonDistance -position*256);
+        this.getSprite().setPosition(SCREEN_WIDTH/2-this.sprite.getWidth()/2,SCREEN_HEIGHT/4*3-384 - position*menuButtonDistance -position*192);
 
 
     }

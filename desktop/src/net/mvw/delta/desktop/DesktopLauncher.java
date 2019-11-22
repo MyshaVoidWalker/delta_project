@@ -9,7 +9,7 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1440 / 4;
-        config.height = 2960 / 4;
+        config.height = 2560 / 4;
         //config.fullscreen = true;
         //config.addIcon("icons/icon_128.png", Files.FileType.Internal);
         //config.addIcon("icons/icon_32.png", Files.FileType.Internal);

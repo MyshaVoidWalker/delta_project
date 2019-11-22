@@ -33,6 +33,8 @@ public class MenuController {
 
     private static String[] creditsString = {"Product of SpectralBit 2019", "Designed by SpectralBit Team", "", "Code and Graphics:", "Mihai Apolschi", "", "Music by Kevin MacLeod"};
 
+    private static float targetLogoZoom = 2;
+
     public static boolean medalHover = false;
     public static float hX = 0, hY = 0;
     public static String hMessage = "";
@@ -59,7 +61,7 @@ public class MenuController {
 
     public static ArrayList<ScalableEntityUI> uiList = new ArrayList<ScalableEntityUI>();
 
-    public static Sprite logoSprite;
+    public static Sprite logoSprite,logoPandaSprite;
 
     /**
      * Initializes the menu.
@@ -101,8 +103,12 @@ public class MenuController {
         uiList.add(aboutButton);
 
         logoSprite = new Sprite(Resources.logo_ProjectDelta);
-        logoSprite.setScale(2);
-        logoSprite.setPosition(SCREEN_WIDTH / 2 - logoSprite.getWidth() / 2, SCREEN_HEIGHT - logoSprite.getHeight());
+        logoSprite.setScale(0);
+        logoSprite.setPosition(SCREEN_WIDTH / 2 -128, SCREEN_HEIGHT - 256);
+
+        logoPandaSprite = new Sprite(Resources.panda_neutral);
+        logoPandaSprite.setScale(0);
+        logoPandaSprite.setPosition(SCREEN_WIDTH / 2 -128 , SCREEN_HEIGHT - 256- 384);
 
     }
 
@@ -120,6 +126,7 @@ public class MenuController {
         }
 
         logoSprite.draw(batch);
+        logoPandaSprite.draw(batch);
 
         if (state == MENU_CREDITS) {
             int sIndex = 0;
@@ -155,6 +162,8 @@ public class MenuController {
         camera.unproject(touchPos3d);
         Vector2 touchPos = new Vector2(touchPos3d.x, touchPos3d.y);
 
+        logoSprite.setScale(logoSprite.getScaleX() + (targetLogoZoom - logoSprite.getScaleX()) /menuButtonZoomSpeed*2 * getDelta());
+        logoPandaSprite.setScale(logoPandaSprite.getScaleX() + (targetLogoZoom/2 - logoPandaSprite.getScaleX()) /menuButtonZoomSpeed* 2 * getDelta());
 
         for (ScalableEntityUI e : uiList) {
 

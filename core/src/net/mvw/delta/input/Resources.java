@@ -14,6 +14,7 @@ public class Resources {
     public static Texture side;
     public static Texture button;
     public static Texture button_f;
+    public static Texture panda_neutral;
 
 
 //    public static Music track_dayOfChaos; // scorch
@@ -40,6 +41,7 @@ public class Resources {
         side = new Texture("images/menu/side.png");
         button = new Texture("images/menu/button.png");
         button_f = new Texture("images/menu/button_f.png");
+        panda_neutral = new Texture("images/pandas/panda_neutral.png");
 
         disposables.add(logo_ProjectDelta);
         disposables.add(logo_SpectralBit);
@@ -47,6 +49,7 @@ public class Resources {
         disposables.add(side);
         disposables.add(button);
         disposables.add(button_f);
+        disposables.add(panda_neutral);
 
 
 //        track_dayOfChaos = Gdx.audio.newMusic(Gdx.files.internal("music/Day of Chaos.mp3"));
