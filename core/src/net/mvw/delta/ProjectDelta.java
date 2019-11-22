@@ -42,10 +42,8 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
     public void create() {
 
         try {
-
             if (Global.DEBUG_MODE  && Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
                 Global.console = new DeltaConsole();
-                //Global.console.setIconImage(new ImageIcon(Gdx.files.internal("icons/gammaconsole.png").readBytes()).getImage());
                 Global.console.run();
             }
 
@@ -100,8 +98,6 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
                 Gdx.gl.glClearColor(80f / 256f, 233f / 256f, 242f / 256f, 1);
             }
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-
 
 
 //			if(playingTrack == null){

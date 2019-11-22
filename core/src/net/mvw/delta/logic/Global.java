@@ -29,7 +29,7 @@ public class Global {
     /**
      * Whether or not the game is in debug mode.
      */
-    public static final boolean DEBUG_MODE = false;
+    public static final boolean DEBUG_MODE = true;
 
     /**
      * The sound flag.
