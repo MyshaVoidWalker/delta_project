@@ -1,6 +1,7 @@
 package net.mvw.delta.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -9,15 +10,30 @@ import com.badlogic.gdx.math.Vector3;
 import net.mvw.delta.logic.SaveManager;
 
 import static net.mvw.delta.ProjectDelta.camera;
-import static net.mvw.delta.logic.Global.GameState.*;
+import static net.mvw.delta.logic.Global.GameState;
+import static net.mvw.delta.logic.Global.GameState.GAME;
+import static net.mvw.delta.logic.Global.GameState.INTRO;
+import static net.mvw.delta.logic.Global.GameState.MENU_ACHIEVEMENTS;
 import static net.mvw.delta.logic.Global.GameState.MENU_CREDITS;
 import static net.mvw.delta.logic.Global.GameState.MENU_EXTRAS;
 import static net.mvw.delta.logic.Global.GameState.MENU_MAIN;
-import static net.mvw.delta.logic.Global.*;
+import static net.mvw.delta.logic.Global.GameState.MENU_OPTIONS;
+import static net.mvw.delta.logic.Global.musicToggle;
 import static net.mvw.delta.logic.Global.soundToggle;
 import static net.mvw.delta.logic.Global.state;
-import static net.mvw.delta.states.controllers.MenuController.*;
+import static net.mvw.delta.states.controllers.MenuController.aboutButton;
+import static net.mvw.delta.states.controllers.MenuController.achievementsButton;
+import static net.mvw.delta.states.controllers.MenuController.backButton;
+import static net.mvw.delta.states.controllers.MenuController.creditsButton;
+import static net.mvw.delta.states.controllers.MenuController.exitButton;
+import static net.mvw.delta.states.controllers.MenuController.extrasButton;
+import static net.mvw.delta.states.controllers.MenuController.musicToggleButtonOFF;
+import static net.mvw.delta.states.controllers.MenuController.musicToggleButtonON;
+import static net.mvw.delta.states.controllers.MenuController.optionsButton;
+import static net.mvw.delta.states.controllers.MenuController.playButton;
 import static net.mvw.delta.states.controllers.MenuController.scrollSetYCredits;
+import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonOFF;
+import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonON;
 
 public class InputBox implements InputProcessor, GestureDetector.GestureListener {
 
@@ -174,77 +190,19 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
     @Override
     public boolean keyDown(int keycode) {
-//        if (keycode == Input.Keys.BACKSPACE || keycode == Input.Keys.BACK) {
-//            SaveManager.save();
-//            switch (state) {
-//                case GAME:
-//                    if (isObjectSelected) {
-//                        isObjectSelected = false;
-//                        for (GameObjectUI gameObjectUI : gameObjectUIArrayList) {
-//                            gameObjectUI.selected = false;
-//                        }
-//                    } else {
-//                        state = MENU_MAIN;
-//                    }
-//                    break;
-//                case GAME_PROGRESS:
-//                    ProgressController.mx = 0;
-//                    ProgressController.my = 0;
-//                    state = GAME;
-//                    break;
-//                case GAME_BUILDINGS:
-//                    state = GAME;
-//                    break;
-//                case MENU_MODS:
-//                    state = MENU_EXTRAS;
-//                    break;
-//                default:
-//                    state = MENU_MAIN;
-//                    break;
-//            }
-//            sound_pop.play(masterSoundVolume);
-//        }
-//
-//        if (state == GAME_BUILDINGS) {
-//            if (keycode == Input.Keys.RIGHT) {
-//                indexOfBuildingShown = getNextIndex(indexOfBuildingShown);
-//                return true;
-//            }
-//            if (keycode == Input.Keys.LEFT) {
-//                indexOfBuildingShown = getPrevIndex(indexOfBuildingShown);
-//                return true;
-//            }
-//        }
-//        //if (DEBUG_MODE) {
-//            if (keycode == Input.Keys.T) {
-//                EnvironmentData.temperature++;
-//            }
-//
-//            if (keycode == Input.Keys.E) {
-//                EnvironmentData.ecology--;
-//            }
-//
-//            if (keycode == Input.Keys.M) {
-//                GameRegistry.materials.get("MATERIAL_MATERIALS").add(1000);
-//            }
-//
-//            if (keycode == Input.Keys.N) {
-//                GameRegistry.materials.get("MATERIAL_FUEL").add(1000);
-//            }
-//
-//            if (keycode == Input.Keys.B) {
-//                GameRegistry.materials.get("MATERIAL_IONS").add(1000);
-//            }
-//
-//            if (keycode == Input.Keys.V) {
-//                GameRegistry.materials.get("MATERIAL_FOOD").add(1000);
-//            }
-//
-//            if (keycode == Input.Keys.C) {
-//                GameRegistry.materials.get("MATERIAL_ELECTRICITY").add(1000);
-//            }
-//        //}
-//
+        if (keycode == Input.Keys.BACKSPACE || keycode == Input.Keys.BACK) {
+            SaveManager.save();
+            switch (state) {
+                case GAME:
+                    state = MENU_MAIN;
+                    break;
+                default:
+                    state = MENU_MAIN;
+                    break;
+            }
+            //sound_pop.play(masterSoundVolume);
+        }
+
 
         return false;
     }
