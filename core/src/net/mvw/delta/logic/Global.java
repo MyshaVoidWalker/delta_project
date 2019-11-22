@@ -47,7 +47,7 @@ public class Global {
     /**
      * The game state.
      */
-    public static GameState state = GameState.MENU_MAIN;
+    public static GameState state = GameState.INTRO;
 
     /**
      * The layout.

@@ -92,11 +92,7 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
         try {
             camera.update();
             batch.setProjectionMatrix(camera.combined);
-            if (Global.state.equals(Global.GameState.GAME_PROGRESS)) {
-                Gdx.gl.glClearColor(0f / 256f, 0f / 256f, 23f / 256f, 1);
-            } else {
-                Gdx.gl.glClearColor(80f / 256f, 233f / 256f, 242f / 256f, 1);
-            }
+
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
