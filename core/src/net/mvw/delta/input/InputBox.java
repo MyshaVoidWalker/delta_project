@@ -16,6 +16,7 @@ import java.util.Iterator;
 import static net.mvw.delta.ProjectDelta.camera;
 import static net.mvw.delta.logic.Global.GameState;
 import static net.mvw.delta.logic.Global.GameState.GAME;
+import static net.mvw.delta.logic.Global.GameState.GAME_PROGRESS;
 import static net.mvw.delta.logic.Global.GameState.INTRO;
 import static net.mvw.delta.logic.Global.GameState.MENU_ACHIEVEMENTS;
 import static net.mvw.delta.logic.Global.GameState.MENU_CREDITS;
@@ -38,6 +39,7 @@ import static net.mvw.delta.states.controllers.MenuController.playButton;
 import static net.mvw.delta.states.controllers.MenuController.scrollSetYCredits;
 import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonOFF;
 import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonON;
+import static net.mvw.delta.input.Resources.*;
 
 public class InputBox implements InputProcessor, GestureDetector.GestureListener {
 
@@ -45,7 +47,7 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
     public static float xScreenOffset = 0;
     public static float yScreenOffset = 0;
     public static float masterSoundVolume = 1f, masterMusicVolume = 1f;
-    public static boolean updateGameContent = false;
+    private static Vector2 lastTouch = new Vector2();
 
     public static void setxScreenOffset(float xScreenOffset) {
         InputBox.xScreenOffset = xScreenOffset;
@@ -55,15 +57,13 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         InputBox.yScreenOffset = yScreenOffset;
     }
 
-    private static Vector2 lastTouch = new Vector2();
-
-
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
         if (masterMusicVolume < 1) {
             musicToggle = false;
         }
+
         if (masterSoundVolume < 1) {
             soundToggle = false;
         }
@@ -71,7 +71,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         Vector3 touchPos3d = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPos3d);
         Vector2 touchPos = new Vector2(touchPos3d.x, touchPos3d.y);
-
 
         if (state.equals(INTRO)) {
             state = MENU_MAIN;
@@ -84,42 +83,43 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
             return true;
         }
 
-
         if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             SaveManager.save();
             switch (state) {
                 case GAME:
-                    state = MENU_MAIN;
+                    state = GAME_PROGRESS;
                     break;
-
+                case MENU_ACHIEVEMENTS:
+                    state = MENU_OPTIONS;
+                    break;
                 default:
                     state = MENU_MAIN;
                     break;
             }
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (playButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             state = GAME;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (extrasButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             state = MENU_EXTRAS;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (optionsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             state = MENU_OPTIONS;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (exitButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             SaveManager.save();
             Gdx.app.exit();
             return true;
@@ -127,42 +127,41 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
         if (aboutButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             Gdx.net.openURI("https://spectralbit.com/home");
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (creditsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             state = MENU_CREDITS;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
             state = MENU_ACHIEVEMENTS;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
-
 
         if (soundToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
             soundToggle = false;
             masterSoundVolume = 0f;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
         if (soundToggleButtonOFF.getSprite().getBoundingRectangle().contains(touchPos)) {
             soundToggle = true;
             masterSoundVolume = 1f;
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
             return false;
         }
 
         if (musicToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
             musicToggle = false;
             masterMusicVolume = 0f;
-            //playingTrack.setVolume(masterMusicVolume);
-            //sound_pop.play(masterSoundVolume);
+            playingTrack.setVolume(masterMusicVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
@@ -170,27 +169,24 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
             musicToggle = true;
             masterMusicVolume = 1f;
 
-            //playingTrack.setVolume(masterMusicVolume);
-            //sound_pop.play(masterSoundVolume);
+            playingTrack.setVolume(masterMusicVolume);
+            sound_click.play(masterSoundVolume);
             return true;
         }
 
-
         if (state == GameState.GAME) {
-
             Iterator<Panda> pandaIterator = GameController.pandas.iterator();
             while(pandaIterator.hasNext()){
                 Panda panda = pandaIterator.next();
                 if (panda.getBoundingRectangle().contains(touchPos)) {
                     System.out.println("Got panda");
                    panda.toBeRemoved = true;
+                    sound_pop.play(masterSoundVolume);
                 }
             }
 
-            //sound_pop.play(masterSoundVolume);
             return true;
         }
-
 
         return false;
     }
@@ -211,7 +207,7 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
                     state = MENU_MAIN;
                     break;
             }
-            //sound_pop.play(masterSoundVolume);
+            sound_click.play(masterSoundVolume);
         }
 
 
@@ -229,8 +225,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Vector2 newTouch = new Vector2(screenX, screenY);
-        // delta will now hold the difference between the last and the current touch positions
-        // delta.x > 0 means the touch moved to the right, delta.x < 0 means a move to the left
         Vector2 delta = newTouch.cpy().sub(lastTouch);
         xVelocity = delta.x;
         yVelocity = delta.y;
@@ -299,7 +293,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
                 achievementsButton.hovered = false;
             }
 
-
             if (aboutButton.getSprite().getBoundingRectangle().contains(touchPos)) {
                 aboutButton.hovered = true;
                 creditsButton.hovered = false;
@@ -316,8 +309,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
             } else {
                 creditsButton.hovered = false;
             }
-
-
         }
 
         if (state == MENU_OPTIONS) {
@@ -371,16 +362,9 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
         }
 
-
         return false;
     }
 
-    /**
-     * Occurs when the player scrolls.
-     *
-     * @param amount How much the player scrolled.
-     * @return
-     */
     @Override
     public boolean scrolled(int amount) {
         return false;
@@ -426,37 +410,18 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         return false;
     }
 
+    float deltaDist = 0;
     @Override
     public boolean zoom(float initialDistance, float distance) {
         deltaDist = distance - initialDistance;
-//        if (state == GAME_PROGRESS) {
-//            if (deltaDist != 0) {
-//                if (ProgressController.treeScale >= 0.5f && ProgressController.treeScale <= 4f) {
-//                    ProgressController.treeScale += deltaDist / 64 * getDelta();
-//                }
-//                if (ProgressController.treeScale < 0.5f) {
-//                    ProgressController.treeScale = 0.5f;
-//                }
-//                if (ProgressController.treeScale > 4f) {
-//                    ProgressController.treeScale = 4f;
-//                }
-//
-//                return true;
-//            }
-//        }
-        return false;
-    }
-
-    float deltaDist = 0;
-
-    @Override
-    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2
-            pointer1, Vector2 pointer2) {
         return false;
     }
 
     @Override
-    public void pinchStop() {
-
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
     }
+
+    @Override
+    public void pinchStop() {}
 }

@@ -21,13 +21,12 @@ public class GameController {
     public static ArrayList<Panda> pandas = new ArrayList<>();
     public static ArrayList<Panda> traitors = new ArrayList<>();
 
-
     public static boolean needToShowTutorial = true;
     private static boolean isPanda = false;
-    private static long lastPanda = System.nanoTime(),level = 0;
+    private static long lastPanda = System.nanoTime(), level = 0;
+    private static float score = 0, pandas_score = 0;
 
-    private static float score = 0,pandas_score = 0;
-
+    private static String displayText = "";
 
     public static void init() {
         bamboo_forest.clear();
@@ -36,43 +35,44 @@ public class GameController {
         }
     }
 
-
     public static void draw(SpriteBatch batch) {
+
 
         batch.begin();
 
-        for (Bamboo sprite : bamboo_forest) {
-            if (sprite.getPanda() != null) {
-                sprite.getPanda().draw(batch);
+        if (state == GameState.GAME) {
+            for (Bamboo sprite : bamboo_forest) {
+                if (sprite.getPanda() != null) {
+                    sprite.getPanda().draw(batch);
+                }
+                sprite.draw(batch);
             }
-            sprite.draw(batch);
+            for (Panda traitor : traitors) {
+                traitor.draw(batch);
+            }
         }
 
-        for (Panda traitor:traitors){
-            traitor.draw(batch);
-        }
+        if (state == GameState.GAME_PROGRESS){
 
+        }
 
         batch.draw(Resources.banner, 0, SCREEN_HEIGHT + InputBox.yScreenOffset - 256, SCREEN_WIDTH, 256);
-        layout.setText(gamefont,"Score: "+pandas_score);
-
-        gamefont.draw(batch,"Score: "+pandas_score,SCREEN_WIDTH/2-layout.width/2,SCREEN_HEIGHT + InputBox.yScreenOffset - 128+layout.height/2);
+        layout.setText(gamefont, "Score: " + pandas_score);
+        gamefont.draw(batch,    "Score: " + pandas_score, SCREEN_WIDTH / 2 - layout.width / 2, SCREEN_HEIGHT + InputBox.yScreenOffset - 128 + layout.height / 2);
         batch.end();
-
     }
 
     private static long lastBamboo = 0, height_of_sticks = -128;
 
     public static void update() {
-
         if (bamboo_forest.size() > 100 && pandas.size() < 10 && System.nanoTime() - lastPanda > 10e8) {
             int stick = (int) (Math.random() * bamboo_forest.size());
-
             Bamboo bamboo = bamboo_forest.get(stick);
             bamboo.setPanda(new Panda(Resources.panda_eating));
             bamboo.getPanda().setBamboo(bamboo);
             lastPanda = System.nanoTime();
             pandas.add(bamboo.getPanda());
+            Resources.sound_munch.play(InputBox.masterSoundVolume);
         }
 
         if (bamboo_forest.size() < 400) {
@@ -88,51 +88,42 @@ public class GameController {
         while (pandaIterator.hasNext()) {
             Panda panda = pandaIterator.next();
             if (panda.toBeRemoved) {
-                pandas_score+=panda.getScaleX();
+                pandas_score += panda.getScaleX();
                 Panda traitor = new Panda(Resources.panda_grumpy);
-                traitor.setPosition(panda.getX(),panda.getY());
+                traitor.setPosition(panda.getX(), panda.getY());
                 traitor.setScale(panda.getScaleX());
                 traitors.add(traitor);
                 pandaIterator.remove();
             }
-
         }
 
-        for (Panda panda:traitors){
-            panda.setPosition(panda.getX(),panda.getY() - 200*getDelta());
-            panda.setScale(panda.getScaleX()*0.9f);
-
+        for (Panda panda : traitors) {
+            panda.setPosition(panda.getX(), panda.getY() - 200 * getDelta());
+            panda.setScale(panda.getScaleX() * 0.9f);
         }
 
         Iterator<Panda> traitorIterator = traitors.iterator();
         while (pandaIterator.hasNext()) {
             Panda panda = traitorIterator.next();
-            if (panda.getScaleX()<0.1) {
+            if (panda.getScaleX() < 0.1) {
                 traitorIterator.remove();
             }
-
         }
 
         for (Bamboo sprite : bamboo_forest) {
             if (!pandas.contains(sprite.getPanda())) {
                 sprite.setPanda(null);
             }
-
             sprite.getToZoom(1);
             sprite.getToTargetAngle(4);
-
             if (sprite.getPanda() != null) {
                 sprite.getPanda().setPosition(sprite.getX() - (float) Math.sin(Math.toRadians(sprite.getRotation())) * (sprite.getHeight() - 32) * sprite.getScaleX(),
                         sprite.getY() + (float) Math.cos(Math.toRadians(sprite.getRotation())) * (sprite.getHeight() - 32) * sprite.getScaleY());
                 sprite.getPanda().setRotation(sprite.getRotation());
                 sprite.getPanda().setScale(sprite.getScaleX() / 4);
-
             }
-
         }
 
-
     }
-
 
 }

@@ -1,12 +1,13 @@
 package net.mvw.delta.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("LibGDXStaticResource")
 public class Resources {
 
     public static Texture logo_SpectralBit;
@@ -24,19 +25,15 @@ public class Resources {
     public static ArrayList<Texture> bamboos = new ArrayList<>();
 
 
-//    public static Music track_dayOfChaos; // scorch
-//    public static Music track_giantWyrm; // flood
-//    public static Music track_jazzBrunch; // calm 1
-//    public static Music track_nightOnTheDocs;// calm 2
-//    public static Music track_poppersAndProsecco; // calm 3
-//    public static Music track_smoothLovin; // calm 4
-//    public static Music track_thisHouse; // storm
-//
-//    public static Music playingTrack;
-//
-//    public static Sound sound_pop;
-//    public static Sound sound_build;
-//    public static Sound sound_unlock;
+    public static Music track_Magic;
+    public static Music track_Odyssey;
+    public static Music track_Tale;
+
+    public static Music playingTrack;
+
+    public static Sound sound_pop;
+    public static Sound sound_click;
+    public static Sound sound_munch;
 
 
     private static ArrayList<Disposable> disposables = new ArrayList<>();
@@ -52,7 +49,7 @@ public class Resources {
         panda_eating = new Texture("images/pandas/panda_eating.png");
         vertex = new Texture("images/vertex.png");
         banner = new Texture("images/menu/banner.png");
-        panda_grumpy=new Texture("images/pandas/panda_grumpy.png");
+        panda_grumpy = new Texture("images/pandas/panda_grumpy.png");
 
         disposables.add(logo_ProjectDelta);
         disposables.add(logo_SpectralBit);
@@ -65,24 +62,28 @@ public class Resources {
         disposables.add(panda_grumpy);
         disposables.add(vertex);
 
-        for (int i = 1;i<=3;i++){
-            Texture t = new Texture("images/bamboos/bamboo"+i+".png");
+        for (int i = 1; i <= 3; i++) {
+            Texture t = new Texture("images/bamboos/bamboo" + i + ".png");
             bamboos.add(t);
             disposables.add(t);
         }
 
+        track_Magic = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_Magic.mp3"));
+        track_Odyssey = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_Odyssey.mp3"));
+        track_Tale = Gdx.audio.newMusic(Gdx.files.internal("sounds/track_Tale.mp3"));
 
-//        track_dayOfChaos = Gdx.audio.newMusic(Gdx.files.internal("music/Day of Chaos.mp3"));
-//        track_giantWyrm = Gdx.audio.newMusic(Gdx.files.internal("music/Giant Wyrm.mp3"));
-//        track_jazzBrunch = Gdx.audio.newMusic(Gdx.files.internal("music/Jazz Brunch.mp3"));
-//        track_nightOnTheDocs = Gdx.audio.newMusic(Gdx.files.internal("music/Night on the Docks - Sax.mp3"));
-//        track_poppersAndProsecco = Gdx.audio.newMusic(Gdx.files.internal("music/Poppers and Prosecco.mp3"));
-//        track_smoothLovin = Gdx.audio.newMusic(Gdx.files.internal("music/Smooth Lovin.mp3"));
-//        track_thisHouse = Gdx.audio.newMusic(Gdx.files.internal("music/This House.mp3"));
-//
-//        sound_pop = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.mp3"));
-//        sound_build = Gdx.audio.newSound(Gdx.files.internal("sounds/build.mp3"));
-//        sound_unlock = Gdx.audio.newSound(Gdx.files.internal("sounds/unlock.mp3"));
+        sound_pop = Gdx.audio.newSound(Gdx.files.internal("sounds/sound_pop.mp3"));
+        sound_click = Gdx.audio.newSound(Gdx.files.internal("sounds/sound_click.mp3"));
+        sound_munch = Gdx.audio.newSound(Gdx.files.internal("sounds/sound_munch.mp3"));
+
+
+        disposables.add(track_Magic);
+        disposables.add(track_Tale);
+        disposables.add(track_Odyssey);
+
+        disposables.add(sound_click);
+        disposables.add(sound_munch);
+        disposables.add(sound_pop);
 
     }
 
@@ -93,17 +94,14 @@ public class Resources {
     }
 
     public static Music getRandomCalmTrack() {
-//        int x = (int) (Math.random() * 4);
-//        if (x == 1) {
-//            return track_smoothLovin;
-//        } else if (x == 2) {
-//            return track_jazzBrunch;
-//        } else if (x == 3) {
-//            return track_poppersAndProsecco;
-//        } else {
-//            return track_nightOnTheDocs;
-//        }
-        return null;
+        int x = (int) (Math.random() * 3);
+        if (x == 1) {
+            return track_Magic;
+        } else if (x == 2) {
+            return track_Odyssey;
+        }
+        return track_Tale;
+
     }
 
 

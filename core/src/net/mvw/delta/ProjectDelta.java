@@ -15,15 +15,10 @@ import net.mvw.delta.input.InputBox;
 import net.mvw.delta.logic.DeltaConsole;
 import net.mvw.delta.logic.Global;
 import net.mvw.delta.logic.SaveManager;
+import net.mvw.delta.states.MainLogic;
 
-import static net.mvw.delta.input.Resources.disposeResources;
-import static net.mvw.delta.input.Resources.loadResources;
-import static net.mvw.delta.states.MainLogic.cameraTargetX;
-import static net.mvw.delta.states.MainLogic.cameraTargetY;
-import static net.mvw.delta.states.MainLogic.cameraTargetZoom;
-import static net.mvw.delta.states.MainLogic.init;
-import static net.mvw.delta.states.MainLogic.renderGame;
-import static net.mvw.delta.states.MainLogic.updateGame;
+import static net.mvw.delta.input.Resources.*;
+import static net.mvw.delta.input.InputBox.*;
 
 public class ProjectDelta extends ApplicationAdapter implements Music.OnCompletionListener {
 
@@ -55,11 +50,9 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
             float width = Gdx.graphics.getWidth();
             generateDeviceData(width, height);
 
-
-            //BaseLoader.load();
-            //ModLoader.load();
             loadResources();
-            //ProgressController.init();
+            SaveManager.load();
+            MainLogic.init(batch);
 
             InputMultiplexer processor = new InputMultiplexer();
             processor.addProcessor(new InputBox());
@@ -67,17 +60,12 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
             Gdx.input.setInputProcessor(processor);
             Gdx.input.setCatchBackKey(true);
 
-            init(batch);
 
-            SaveManager.load();
 
-            //activateMods();
-            //ProgressController.regenerate();
-
-            //playingTrack = getRandomCalmTrack();
-            //playingTrack.setOnCompletionListener(this);
-            //playingTrack.setVolume(masterMusicVolume);
-            //playingTrack.play();
+            playingTrack = getRandomCalmTrack();
+            playingTrack.setOnCompletionListener(this);
+            playingTrack.setVolume(masterMusicVolume);
+            playingTrack.play();
 
         } catch (Exception ex) {
             Global.printError(Global.formatException(ex));
@@ -96,17 +84,17 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-//			if(playingTrack == null){
-//				playingTrack = getRandomCalmTrack();
-//				playingTrack.setOnCompletionListener(this);
-//				playingTrack.setVolume(masterMusicVolume);
-//				playingTrack.play();
-//			}
-//			playingTrack.setVolume(masterMusicVolume);
+            System.out.println("State: "+Global.state);
+			if(playingTrack == null){
+				playingTrack = getRandomCalmTrack();
+				playingTrack.setOnCompletionListener(this);
+				playingTrack.setVolume(masterMusicVolume);
+				playingTrack.play();
+			}
+			playingTrack.setVolume(masterMusicVolume);
 
-            updateGame();
-            renderGame(batch);
-
+            MainLogic.updateGame();
+            MainLogic.renderGame(batch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,9 +157,9 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
 
         camera = new OrthographicCamera(viewportWidth, viewportHeight);
         camera.setToOrtho(false, viewportWidth, viewportHeight);
-        camera.position.x = cameraTargetX;
-        camera.position.y = cameraTargetY;
-        camera.zoom = cameraTargetZoom;
+        camera.position.x = MainLogic.cameraTargetX;
+        camera.position.y = MainLogic.cameraTargetY;
+        camera.zoom = MainLogic.cameraTargetZoom;
 
         Global.printDebug(Gdx.graphics.getWidth() + ":x:" + Gdx.graphics.getHeight(), "WINDOW");
         camera.update();
@@ -181,9 +169,9 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
 
     @Override
     public void onCompletion(Music music) {
-//		playingTrack = getRandomCalmTrack();
-//		playingTrack.setOnCompletionListener(this);
-//		playingTrack.setVolume(masterMusicVolume);
-//		playingTrack.play();
+		playingTrack = getRandomCalmTrack();
+		playingTrack.setOnCompletionListener(this);
+		playingTrack.setVolume(masterMusicVolume);
+		playingTrack.play();
     }
 }

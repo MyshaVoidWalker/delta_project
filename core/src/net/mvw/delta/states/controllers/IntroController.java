@@ -21,7 +21,7 @@ public class IntroController {
 
     private static float angleAlpha = 0;
     private static String introText = "SpectralBit presents:";
-    private static Sprite logo;
+    private static Sprite logo = new Sprite();
     private static float alphaits = 8f;
 
 
@@ -37,6 +37,7 @@ public class IntroController {
     }
 
     private static float side_size = 256;
+
     public static void draw(SpriteBatch batch) {
         batch.begin();
         logo.draw(batch);
