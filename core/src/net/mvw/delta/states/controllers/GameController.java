@@ -19,6 +19,7 @@ public class GameController {
 
     public static ArrayList<Bamboo> bamboo_forest = new ArrayList<>();
     public static ArrayList<Panda> pandas = new ArrayList<>();
+    public static ArrayList<Panda> traitors = new ArrayList<>();
 
 
     public static boolean needToShowTutorial = true;
@@ -41,11 +42,14 @@ public class GameController {
         batch.begin();
 
         for (Bamboo sprite : bamboo_forest) {
-
             if (sprite.getPanda() != null) {
                 sprite.getPanda().draw(batch);
             }
             sprite.draw(batch);
+        }
+
+        for (Panda traitor:traitors){
+            traitor.draw(batch);
         }
 
 
@@ -85,7 +89,26 @@ public class GameController {
             Panda panda = pandaIterator.next();
             if (panda.toBeRemoved) {
                 pandas_score+=panda.getScaleX();
+                Panda traitor = new Panda(Resources.panda_grumpy);
+                traitor.setPosition(panda.getX(),panda.getY());
+                traitor.setScale(panda.getScaleX());
+                traitors.add(traitor);
                 pandaIterator.remove();
+            }
+
+        }
+
+        for (Panda panda:traitors){
+            panda.setPosition(panda.getX(),panda.getY() - 200*getDelta());
+            panda.setScale(panda.getScaleX()*0.9f);
+
+        }
+
+        Iterator<Panda> traitorIterator = traitors.iterator();
+        while (pandaIterator.hasNext()) {
+            Panda panda = traitorIterator.next();
+            if (panda.getScaleX()<0.1) {
+                traitorIterator.remove();
             }
 
         }
