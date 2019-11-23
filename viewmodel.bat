@@ -1,0 +1,1 @@
+gource --camera-mode track --user-image-dir .git/avatar/ --auto-skip-seconds 0.5 --title "ProjectGamma" -1920x1080 
