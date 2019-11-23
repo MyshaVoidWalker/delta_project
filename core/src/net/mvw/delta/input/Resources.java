@@ -25,6 +25,7 @@ public class Resources {
     public static Texture exitWood;
     public static Texture vertex;
     public static Texture banner;
+    public static Texture leaf;
 
     public static ArrayList<Texture> bamboos = new ArrayList<>();
 
@@ -58,6 +59,7 @@ public class Resources {
         golden_bamboo = new Texture("images/bamboos/golden_bamboo.png");
         exitWood = new Texture("images/menu/exit_level.png");
         playWood = new Texture("images/menu/play.png");
+        leaf = new Texture("images/entities/leaf.png");
 
         disposables.add(logo_ProjectDelta);
         disposables.add(logo_SpectralBit);
@@ -73,6 +75,7 @@ public class Resources {
         disposables.add(exitWood);
         disposables.add(playWood);
         disposables.add(vertex);
+        disposables.add(leaf);
 
         for (int i = 1; i <= 3; i++) {
             Texture t = new Texture("images/bamboos/bamboo" + i + ".png");

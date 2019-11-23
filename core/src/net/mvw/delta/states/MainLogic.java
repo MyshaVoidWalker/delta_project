@@ -3,11 +3,14 @@ package net.mvw.delta.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import net.mvw.delta.entities.Leaf;
 import net.mvw.delta.input.InputBox;
 import net.mvw.delta.logic.Global;
 import net.mvw.delta.states.controllers.GameController;
 import net.mvw.delta.states.controllers.IntroController;
 import net.mvw.delta.states.controllers.MenuController;
+
+import java.util.ArrayList;
 
 import static net.mvw.delta.ProjectDelta.SCREEN_HEIGHT;
 import static net.mvw.delta.ProjectDelta.SCREEN_WIDTH;
@@ -17,6 +20,7 @@ import static net.mvw.delta.ProjectDelta.viewportHeight;
 import static net.mvw.delta.ProjectDelta.viewportWidth;
 import static net.mvw.delta.input.InputBox.continualInputs;
 import static net.mvw.delta.input.Resources.background;
+import static net.mvw.delta.input.Resources.leaf;
 import static net.mvw.delta.input.Resources.side;
 import static net.mvw.delta.logic.Global.GameState;
 import static net.mvw.delta.logic.Global.state;
@@ -31,6 +35,8 @@ public class MainLogic {
     public static float cameraTargetSpeed = 12;
     public static float cameraTargetZoomSpeed = 12;
 
+    private static ArrayList<Leaf> leaves = new ArrayList<>();
+
     public static void setCameraTargetPosition(float targetX, float targetY, float targetSpeed) {
         cameraTargetX = targetX;
         cameraTargetY = targetY;
@@ -43,6 +49,12 @@ public class MainLogic {
     }
 
     public static void init(SpriteBatch batch) {
+
+        for(int i = 0;i<200;i++){
+            leaves.add(new Leaf(leaf,viewportWidth,-viewportHeight,false));
+            leaves.add(new Leaf(leaf,-viewportWidth,-viewportHeight,true));
+        }
+
 
         IntroController.init();
         MenuController.init();
@@ -120,6 +132,11 @@ public class MainLogic {
     private static void drawOverground(SpriteBatch batch) {
 
         batch.begin();
+
+        for (Leaf leaf:leaves) {
+            leaf.move();
+            leaf.draw(batch);
+        }
 
         batch.end();
     }
