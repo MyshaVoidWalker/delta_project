@@ -3,24 +3,12 @@ package net.mvw.delta.logic;
 
 import net.mvw.indexio.IndexIO;
 
-import java.util.Map;
 
-
-/**
- * Contains methods used for saving and loading the game.
- *
- * @author UnexomWid
- */
 public class SaveManager {
 
-    /**
-     * The file where the game save is.
-     */
+
     public static IndexIO saver = new IndexIO();
 
-    /**
-     * Saves the game.
-     */
     public static void save() {
         Global.printInfo("Saving game ...", "SaveManager");
 
@@ -121,9 +109,6 @@ public class SaveManager {
         }
     }
 
-    /**
-     * Loads the user ID.
-     */
     @Deprecated
     public static void loadUserID()  {
 //        saver.loadDataFrom("saves/save.gamma", "::");

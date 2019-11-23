@@ -30,15 +30,8 @@ public class MenuController {
 
     private static float menuButtonZoom = 2.5f;
     public static float menuButtonZoomSpeed = 2;
-
     private static String[] creditsString = {"Product of SpectralBit 2019", "Designed by SpectralBit Team", "", "Code and Graphics:", "Mihai Apolschi", "", "Music by Kevin MacLeod"};
-
     private static float targetLogoZoom = 2;
-
-    public static boolean medalHover = false;
-    public static float hX = 0, hY = 0;
-    public static String hMessage = "";
-
 
     //MENU_MAIN
     public static ScalableEntityUI playButton;
@@ -56,16 +49,11 @@ public class MenuController {
     public static ScalableEntityUI achievementsButton;
     public static ScalableEntityUI creditsButton;
     public static ScalableEntityUI aboutButton;
-
     public static ScalableEntityUI backButton;
 
     public static ArrayList<ScalableEntityUI> uiList = new ArrayList<ScalableEntityUI>();
-
     public static Sprite logoSprite,logoPandaSprite;
 
-    /**
-     * Initializes the menu.
-     */
     public static void init() {
 
         playButton = new ScalableEntityUI(new Sprite(Resources.button), "Play", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 0, MENU_MAIN);
@@ -112,11 +100,6 @@ public class MenuController {
 
     }
 
-    /**
-     * Draws the menu.
-     *
-     * @param batch The batch to draw on.
-     */
     public static void draw(SpriteBatch batch) {
 
         batch.begin();
@@ -146,16 +129,10 @@ public class MenuController {
 
         }
 
-
         batch.end();
     }
 
-
     public static float scrollSetYCredits = 0;
-
-    /**
-     * Updates the menu.
-     */
     public static void update() {
 
         Vector3 touchPos3d = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -172,7 +149,7 @@ public class MenuController {
                         || (e.equals(soundToggleButtonON) && Global.soundToggle) || (e.equals(soundToggleButtonOFF) && !Global.soundToggle)
                         || (e.equals(backButton))) {
                     e.speedOfScale = menuButtonZoomSpeed / 4;
-                    if (e.hovered) e.targetZoom = e.fullZoom + 0.2f;
+                    if (e.hovered) e.targetZoom = e.fullZoom + 0.4f;
                     else e.targetZoom = e.fullZoom;
                 } else {
                     e.speedOfScale = menuButtonZoomSpeed / 16;
@@ -182,7 +159,7 @@ public class MenuController {
 
                 if (e.getStateOfAction().equals(Global.state)) {
                     e.speedOfScale = menuButtonZoomSpeed / 4;
-                    if (e.hovered) e.targetZoom = e.fullZoom + 0.2f;
+                    if (e.hovered) e.targetZoom = e.fullZoom + 0.4f;
                     else e.targetZoom = e.fullZoom;
                 } else {
                     e.speedOfScale = menuButtonZoomSpeed / 16;

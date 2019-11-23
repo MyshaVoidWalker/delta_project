@@ -185,7 +185,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
     public static void continualInputs() {
 
-
     }
 
     @Override
@@ -207,7 +206,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         return false;
     }
 
-
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         lastTouch.set(screenX, screenY);
@@ -216,14 +214,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
     private static float xVelocity, yVelocity;
 
-    /**
-     * Occurs when the player drags.
-     *
-     * @param screenX The touch X coordinate.
-     * @param screenY The touch Y coordinate.
-     * @param pointer The pointer.
-     * @return
-     */
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         Vector2 newTouch = new Vector2(screenX, screenY);
@@ -233,20 +223,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         xVelocity = delta.x;
         yVelocity = delta.y;
         lastTouch = newTouch;
-
-//        if (state == GAME_PROGRESS) {
-//            if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-//                ProgressController.mx += xVelocity;
-//                ProgressController.my -= yVelocity;
-//            } else {
-//                ProgressController.mx += xVelocity;
-//                ProgressController.my -= yVelocity;
-//            }
-//        }
-//
-//        showReqHover = false;
-
-
         return false;
     }
 
@@ -254,193 +230,135 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         Vector3 touchPos3d = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        camera.unproject(touchPos3d);
-//        Vector2 touchPos = new Vector2(touchPos3d.x, touchPos3d.y);
-//
-//        if (state == MENU_MAIN) {
-//            if (playButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                playButton.hovered = true;
-//                optionsButton.hovered = false;
-//                extrasButton.hovered = false;
-//                exitButton.hovered = false;
-//                return true;
-//            } else {
-//                playButton.hovered = false;
-//            }
-//
-//            if (extrasButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                extrasButton.hovered = true;
-//                playButton.hovered = false;
-//                optionsButton.hovered = false;
-//                exitButton.hovered = false;
-//                return true;
-//            } else {
-//                extrasButton.hovered = false;
-//            }
-//
-//            if (optionsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                optionsButton.hovered = true;
-//                exitButton.hovered = false;
-//                return true;
-//            } else {
-//                optionsButton.hovered = false;
-//            }
-//
-//            if (exitButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                exitButton.hovered = true;
-//                return true;
-//            } else {
-//                exitButton.hovered = false;
-//            }
-//        }
-//
-//        if (state == MENU_EXTRAS) {
-//
-//            if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                backButton.hovered = true;
-//                aboutButton.hovered = false;
-//                return true;
-//            } else {
-//                backButton.hovered = false;
-//            }
-//
-//            if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                achievementsButton.hovered = true;
-//                modsButton.hovered = false;
-//                return true;
-//            } else {
-//                achievementsButton.hovered = false;
-//            }
-//
-//            if (modsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                modsButton.hovered = true;
-//                achievementsButton.hovered = false;
-//                creditsButton.hovered = false;
-//                aboutButton.hovered = false;
-//                return true;
-//            } else {
-//                achievementsButton.hovered = false;
-//            }
-//
-//            if (aboutButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                aboutButton.hovered = true;
-//                creditsButton.hovered = false;
-//                modsButton.hovered = false;
-//                return true;
-//            } else {
-//                aboutButton.hovered = false;
-//            }
-//
-//            if (creditsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                creditsButton.hovered = true;
-//                modsButton.hovered = false;
-//                aboutButton.hovered = false;
-//                backButton.hovered = false;
-//                return true;
-//            } else {
-//                creditsButton.hovered = false;
-//            }
-//
-//
-//        }
-//
-//        if (state == MENU_OPTIONS) {
-//
-//            if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                backButton.hovered = true;
-//                musicToggleButtonOFF.hovered = false;
-//                musicToggleButtonON.hovered = false;
-//                return true;
-//            } else {
-//                backButton.hovered = false;
-//            }
-//
-//            if (soundToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                soundToggleButtonON.hovered = true;
-//                musicToggleButtonOFF.hovered = false;
-//                musicToggleButtonON.hovered = false;
-//                return true;
-//            } else {
-//                soundToggleButtonON.hovered = false;
-//            }
-//
-//            if (soundToggleButtonOFF.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                soundToggleButtonOFF.hovered = true;
-//                musicToggleButtonOFF.hovered = false;
-//                musicToggleButtonON.hovered = false;
-//                return true;
-//            } else {
-//                soundToggleButtonOFF.hovered = false;
-//            }
-//
-//            if (musicToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                musicToggleButtonON.hovered = true;
-//                soundToggleButtonON.hovered = false;
-//                soundToggleButtonOFF.hovered = false;
-//                backButton.hovered = false;
-//                return true;
-//            } else {
-//                musicToggleButtonON.hovered = false;
-//            }
-//
-//            if (musicToggleButtonOFF.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                musicToggleButtonOFF.hovered = true;
-//                soundToggleButtonON.hovered = false;
-//                soundToggleButtonOFF.hovered = false;
-//                backButton.hovered = false;
-//                return true;
-//            } else {
-//                musicToggleButtonOFF.hovered = false;
-//            }
-//
-//        }
-//
-//        if (state == MENU_MODS) {
-//            for (Mod mod : GameRegistry.mods.values()) {
-//                for (int i = uiList.size() - 1; i > uiList.size() - 1 - GameRegistry.mods.size(); i--) {
-//                    ScalableEntityUI buttonMod = uiList.get(i);
-//                    if (buttonMod.getText().equals(mod.name)) {
-//                        if (buttonMod.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                            buttonMod.hovered = true;
-//                        } else {
-//                            buttonMod.hovered = false;
-//                        }
-//                    }
-//                }
-//            }
-//            if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-//                backButton.hovered = true;
-//            } else {
-//                backButton.hovered = false;
-//            }
-//            return true;
-//        }
-//
-//        if (state == GAME_PROGRESS) {
-//            showReqHover = unlockNodes(ProgressController.progressTree.rootNode, touchPos);
-//        }
-//
-//        if (state == MENU_ACHIEVEMENTS) {
-//            if (mScorch.getBoundingRectangle().contains(touchPos) || mFlood.getBoundingRectangle().contains(touchPos) || mStorm.getBoundingRectangle().contains(touchPos)) {
-//                medalHover = true;
-//                hX = touchPos.x;
-//                hY = touchPos.y;
-//                if (mScorch.getBoundingRectangle().contains(touchPos)) {
-//                    hMessage = "Obtained by causing THE SCORCH.";
-//                }
-//                if (mFlood.getBoundingRectangle().contains(touchPos)) {
-//                    hMessage = "Obtained by causing THE FLOOD.";
-//                }
-//                if (mStorm.getBoundingRectangle().contains(touchPos)) {
-//                    hMessage = "Obtained by causing THE STORM.";
-//                }
-//
-//            } else {
-//                medalHover = false;
-//            }
-//        } else {
-//            medalHover = false;
-//        }
+        camera.unproject(touchPos3d);
+        Vector2 touchPos = new Vector2(touchPos3d.x, touchPos3d.y);
+
+        if (state == MENU_MAIN) {
+            if (playButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                playButton.hovered = true;
+                optionsButton.hovered = false;
+                extrasButton.hovered = false;
+                exitButton.hovered = false;
+                return true;
+            } else {
+                playButton.hovered = false;
+            }
+
+            if (extrasButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                extrasButton.hovered = true;
+                playButton.hovered = false;
+                optionsButton.hovered = false;
+                exitButton.hovered = false;
+                return true;
+            } else {
+                extrasButton.hovered = false;
+            }
+
+            if (optionsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                optionsButton.hovered = true;
+                exitButton.hovered = false;
+                return true;
+            } else {
+                optionsButton.hovered = false;
+            }
+
+            if (exitButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                exitButton.hovered = true;
+                return true;
+            } else {
+                exitButton.hovered = false;
+            }
+        }
+
+        if (state == MENU_EXTRAS) {
+
+            if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                backButton.hovered = true;
+                aboutButton.hovered = false;
+                return true;
+            } else {
+                backButton.hovered = false;
+            }
+
+            if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                achievementsButton.hovered = true;
+                return true;
+            } else {
+                achievementsButton.hovered = false;
+            }
+
+
+            if (aboutButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                aboutButton.hovered = true;
+                creditsButton.hovered = false;
+                return true;
+            } else {
+                aboutButton.hovered = false;
+            }
+
+            if (creditsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                creditsButton.hovered = true;
+                aboutButton.hovered = false;
+                backButton.hovered = false;
+                return true;
+            } else {
+                creditsButton.hovered = false;
+            }
+
+
+        }
+
+        if (state == MENU_OPTIONS) {
+
+            if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+                backButton.hovered = true;
+                musicToggleButtonOFF.hovered = false;
+                musicToggleButtonON.hovered = false;
+                return true;
+            } else {
+                backButton.hovered = false;
+            }
+
+            if (soundToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
+                soundToggleButtonON.hovered = true;
+                musicToggleButtonOFF.hovered = false;
+                musicToggleButtonON.hovered = false;
+                return true;
+            } else {
+                soundToggleButtonON.hovered = false;
+            }
+
+            if (soundToggleButtonOFF.getSprite().getBoundingRectangle().contains(touchPos)) {
+                soundToggleButtonOFF.hovered = true;
+                musicToggleButtonOFF.hovered = false;
+                musicToggleButtonON.hovered = false;
+                return true;
+            } else {
+                soundToggleButtonOFF.hovered = false;
+            }
+
+            if (musicToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
+                musicToggleButtonON.hovered = true;
+                soundToggleButtonON.hovered = false;
+                soundToggleButtonOFF.hovered = false;
+                backButton.hovered = false;
+                return true;
+            } else {
+                musicToggleButtonON.hovered = false;
+            }
+
+            if (musicToggleButtonOFF.getSprite().getBoundingRectangle().contains(touchPos)) {
+                musicToggleButtonOFF.hovered = true;
+                soundToggleButtonON.hovered = false;
+                soundToggleButtonOFF.hovered = false;
+                backButton.hovered = false;
+                return true;
+            } else {
+                musicToggleButtonOFF.hovered = false;
+            }
+
+        }
+
 
         return false;
     }
@@ -453,41 +371,14 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
      */
     @Override
     public boolean scrolled(int amount) {
-//        if (state == GAME_PROGRESS) {
-//            if (amount != 0) {
-//                if (ProgressController.treeScale >= 0.5f && ProgressController.treeScale <= 4f) {
-//                    ProgressController.treeScale -= amount * 4 * getDelta();
-//                }
-//                if (ProgressController.treeScale < 0.5f) {
-//                    ProgressController.treeScale = 0.5f;
-//                }
-//                if (ProgressController.treeScale > 4f) {
-//                    ProgressController.treeScale = 4f;
-//                }
-//
-//                return true;
-//            }
-//        }
         return false;
     }
 
-    /**
-     * Occurs when the player releases a key.
-     *
-     * @param keycode The code of the key.
-     * @return
-     */
     @Override
     public boolean keyUp(int keycode) {
         return false;
     }
 
-    /**
-     * Occurs when the player types a character.
-     *
-     * @param character The character.
-     * @return
-     */
     @Override
     public boolean keyTyped(char character) {
         return false;

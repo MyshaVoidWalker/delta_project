@@ -24,82 +24,44 @@ import javax.swing.SwingUtilities;
 public class DeltaConsole extends JFrame implements Runnable {
 
     private int logCount;
-
     public int getLogCount() {
         return this.logCount;
     }
-
     public boolean fullTimestamp;
-
     private int textSpacing;
-    /**
-     * Gets the amount of spaces to write between the timestamp and the message.
-     */
     public int getTextSpacing() {
         return this.textSpacing;
     }
-    /**
-     * Sets the amount of spaces to write between the timestamp and the message.
-     */
     public void setTextSpacing(int textSpacing) {
         this.textSpacing = textSpacing;
         this.halfTextSpacing = this.textSpacing / 2;
     }
-
     private int halfTextSpacing;
-
     private Color backgroundColor;
-    /**
-     * Gets the background color of the console.
-     */
     public Color getBackgroundColor() {
         return this.backgroundColor;
     }
-    /**
-     * Sets the background color of the console.
-     *
-     * @param backgroundColor The background color of the console.
-     */
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
     private Color textColor;
-    /**
-     * Gets the console text color.
-     */
     public Color getTextColor() {
         return this.textColor;
     }
-    /**
-     * Sets the console text color.
-     *
-     * @param textColor The console text color.
-     */
     public void setTextColor(Color textColor) {
         this.textColor = textColor;
     }
 
     private Color borderColor;
-    /**
-     * Gets the color of the border between the lines.
-     */
     public Color getBorderColor() {
         return this.borderColor;
     }
-    /**
-     * Sets the color of the border between the lines.
-     *
-     * @param borderColor The color of the border between the lines.
-     */
     public void setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
     }
 
     private Color debugColor;
-    /**
-     * Gets the color for Debug messages.
-     */
     public Color getDebugColor() {
         return debugColor;
     }
@@ -239,58 +201,22 @@ public class DeltaConsole extends JFrame implements Runnable {
         this.contentString = new StringBuilder("<html><head><style>div { white-space: nowrap; font-family: " + textPane.getFont().getFamily() + "; width: 100%; border-top: 1px solid " + String.format("#%02x%02x%02x", this.borderColor.getRed(), this.borderColor.getGreen(), this.borderColor.getBlue()) + "; padding-top: 5px; padding-bottom: 5px; margin-top: 0px; } .debug { background-color: " + String.format("#%02x%02x%02x", this.debugColor.getRed(), this.debugColor.getGreen(), this.debugColor.getBlue()) + "; } .info { background-color: " + String.format("#%02x%02x%02x", this.infoColor.getRed(), this.infoColor.getGreen(), this.infoColor.getBlue()) + "; } .warning { background-color: " + String.format("#%02x%02x%02x", this.warningColor.getRed(), this.warningColor.getGreen(), this.warningColor.getBlue()) + "; } .error { background-color: " + String.format("#%02x%02x%02x", this.errorColor.getRed(), this.errorColor.getGreen(), this.errorColor.getBlue()) + "; }</style></head>");
         this.textPane.setText(contentString.toString());
     }
-
-    /**
-     * Prints verbose text.
-     *
-     * @param text The text to print.
-     */
     public void printVerbose(String text) {
         printVerbose(text, "VERBOSE");
     }
-
-    /**
-     * Prints debug text.
-     *
-     * @param text The text to print.
-     */
     public void printDebug(String text) {
         printDebug(text, "DEBUG");
     }
-
-    /**
-     * Prints info text.
-     *
-     * @param text The text to print.
-     */
     public void printInfo(String text) {
         printInfo(text, "INFO");
     }
-
-    /**
-     * Prints warning text.
-     *
-     * @param text The text to print.
-     */
     public void printWarning(String text) {
         printWarning(text, "WARNING");
     }
-
-    /**
-     * Prints error text.
-     *
-     * @param text The text to print.
-     */
     public void printError(String text) {
         printError(text, "ERROR");
     }
 
-    /**
-     * Prints verbose text.
-     *
-     * @param text The text to print.
-     * @param caller The caller of the method.
-     */
     public void printVerbose(String text, String caller) {
         try {
             while(!ready)
@@ -328,12 +254,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Prints debug text.
-     *
-     * @param text The text to print.
-     * @param caller The caller of the method.
-     */
     public void printDebug(String text, String caller) {
         try {
             while(!ready)
@@ -371,12 +291,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Prints info text.
-     *
-     * @param text The text to print.
-     * @param caller The caller of the method.
-     */
     public void printInfo(String text, String caller) {
         try {
             while(!ready)
@@ -414,12 +328,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Prints warning text.
-     *
-     * @param text The text to print.
-     * @param caller The caller of the method.
-     */
     public void printWarning(String text, String caller) {
         try {
             while(!ready)
@@ -457,12 +365,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Prints error text.
-     *
-     * @param text The text to print.
-     * @param caller The caller of the method.
-     */
     public void printError(String text, String caller) {
         try {
             while(!ready)
@@ -500,9 +402,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Clears the console.
-     */
     public void clear() {
         this.contentString = new StringBuilder("<html><head><style>div { white-space: nowrap; font-family: " + textPane.getFont().getFamily() + "; width: 100%; border-top: 1px solid " + String.format("#%02x%02x%02x", this.borderColor.getRed(), this.borderColor.getGreen(), this.borderColor.getBlue()) + "; padding-top: 5px; padding-bottom: 5px; margin-top: 0px; } .debug { background-color: " + String.format("#%02x%02x%02x", this.debugColor.getRed(), this.debugColor.getGreen(), this.debugColor.getBlue()) + "; } .info { background-color: " + String.format("#%02x%02x%02x", this.infoColor.getRed(), this.infoColor.getGreen(), this.infoColor.getBlue()) + "; } .warning { background-color: " + String.format("#%02x%02x%02x", this.warningColor.getRed(), this.warningColor.getGreen(), this.warningColor.getBlue()) + "; } .error { background-color: " + String.format("#%02x%02x%02x", this.errorColor.getRed(), this.errorColor.getGreen(), this.errorColor.getBlue()) + "; }</style></head>");
         this.textPane.setText(contentString.toString());
@@ -515,9 +414,6 @@ public class DeltaConsole extends JFrame implements Runnable {
         }
     }
 
-    /**
-     * Saves the log in a file (HTML format).
-     */
     public void save() {
         try {
             File log = new File("." + File.separator + new Timestamp(System.currentTimeMillis()).toString().replace(' ', '_').replace(':', '-') + "_log.html");

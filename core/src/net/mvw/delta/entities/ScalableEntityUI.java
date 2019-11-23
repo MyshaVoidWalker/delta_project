@@ -22,11 +22,6 @@ import static net.mvw.delta.logic.Global.getDelta;
 import static net.mvw.delta.logic.Global.layout;
 import static net.mvw.delta.logic.Global.state;
 
-/**
- * Represents a scalable UI entity.
- *
- * @author MyshaVoidWalker
- */
 public class ScalableEntityUI {
 
     public static float menuButtonDistance = 32;
@@ -39,18 +34,6 @@ public class ScalableEntityUI {
     private ArrayList<Global.GameState> stateOfAction = new ArrayList<>();
     private static float compensatorOffsetY=48;
 
-    /**
-     * Initializes a new instance of the ScalableEntityUI class.
-     *
-     * @param sprite The sprite of the entity.
-     * @param text The text of the entity.
-     * @param startZoom The start zoom.
-     * @param targetZoom The target zoom.
-     * @param fullZoom The full zoom.
-     * @param speedOfScale The speed of scale.
-     * @param position The position of the entity.
-     * @param stateOfAction The state of the action.
-     */
     public ScalableEntityUI(Sprite sprite, String text, float startZoom, float targetZoom, float fullZoom, float speedOfScale, float position, GameState... stateOfAction) {
         this.sprite = sprite;
         this.sprite.setScale(startZoom);
@@ -70,9 +53,6 @@ public class ScalableEntityUI {
 
     }
 
-    /**
-     * Changes the zoom to reach the target zoom.
-     */
     public void getTotargetZoom() {
 
         this.getSprite().setScale(this.getSprite().getScaleX() + (targetZoom - this.getSprite().getScaleX()) / speedOfScale * getDelta());
@@ -119,14 +99,9 @@ public class ScalableEntityUI {
         layout.setText(ProjectDelta.gamefontfliped, text);
         ProjectDelta.gamefontfliped.draw(batch, text, currentTexture.getWidth() / 2f - layout.width / 2, currentTexture.getHeight() / 2f-layout.height/2);
         batch.end();
-
         fbo.end();
-
         textedTexture = new TextureRegion(fbo.getColorBufferTexture());
-
-
         //textedTexture.flip(true, true);
-
 
         sprite.setTexture(textedTexture.getTexture());
 

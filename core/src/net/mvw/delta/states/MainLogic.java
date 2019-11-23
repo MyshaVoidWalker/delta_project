@@ -25,7 +25,6 @@ import static net.mvw.delta.logic.Global.timePassed;
 
 public class MainLogic {
 
-
     public static float cameraTargetX = SCREEN_WIDTH / 2;
     public static float cameraTargetY = SCREEN_HEIGHT / 2;
     public static float cameraTargetZoom = 1;
@@ -49,11 +48,9 @@ public class MainLogic {
         MenuController.init();
         GameController.init();
 
-
         GameController.update();
 
     }
-
 
     public static void updateGame() {
         continualInputs();
@@ -65,7 +62,6 @@ public class MainLogic {
         if (state == GameState.GAME || state == GameState.GAME_TUTORIAL || state == GameState.GAME_END || state == GameState.GAME_PROGRESS)
             GameController.update();
     }
-
 
     private static void handleVariables() {
         timePassed += Gdx.graphics.getDeltaTime();
@@ -108,10 +104,6 @@ public class MainLogic {
         drawOverground(batch);
     }
 
-
-    private static float angle;
-
-
     private static float side_size = 256;
 
     private static void drawBackground(SpriteBatch batch) {
@@ -122,10 +114,8 @@ public class MainLogic {
             batch.draw(side, -side_size / 2, -InputBox.yScreenOffset, side_size, viewportHeight);
             batch.draw(side, SCREEN_WIDTH - side_size / 2, -InputBox.yScreenOffset, side_size, viewportHeight);
         }
-
         batch.end();
     }
-
 
     private static void drawOverground(SpriteBatch batch) {
 

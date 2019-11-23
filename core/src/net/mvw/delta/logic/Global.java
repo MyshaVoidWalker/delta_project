@@ -19,17 +19,10 @@ import java.util.function.Consumer;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
-/**
- * Contains global fields and methods.
- *
- * @author MyshaVoidWalker, UnexomWid
- */
 public class Global {
 
-    /**
-     * Whether or not the game is in debug mode.
-     */
-    public static final boolean DEBUG_MODE = true;
+
+    public static final boolean DEBUG_MODE = false;
 
     /**
      * The sound flag.

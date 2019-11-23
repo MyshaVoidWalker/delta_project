@@ -16,8 +16,9 @@ public class Resources {
     public static Texture button;
     public static Texture button_f;
     public static Texture panda_neutral;
+    public static Texture panda_eating;
     public static Texture vertex;
-    public static  Texture banner;
+    public static Texture banner;
 
     public static ArrayList<Texture> bamboos = new ArrayList<>();
 
@@ -47,6 +48,7 @@ public class Resources {
         button = new Texture("images/menu/button.png");
         button_f = new Texture("images/menu/button_f.png");
         panda_neutral = new Texture("images/pandas/panda_neutral.png");
+        panda_eating = new Texture("images/pandas/panda_eating.png");
         vertex = new Texture("images/vertex.png");
         banner = new Texture("images/menu/banner.png");
 
@@ -57,6 +59,7 @@ public class Resources {
         disposables.add(button);
         disposables.add(button_f);
         disposables.add(panda_neutral);
+        disposables.add(panda_eating);
         disposables.add(vertex);
 
         for (int i = 1;i<=3;i++){
