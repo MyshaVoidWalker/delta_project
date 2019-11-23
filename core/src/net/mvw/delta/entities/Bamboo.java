@@ -13,7 +13,7 @@ public class Bamboo extends Sprite {
 
     public Bamboo(Texture texture,float base_angle,float target_angle, float base_zoom , float target_zoom, float start_Zoom) {
         super(texture);
-
+        this.setOrigin(0,0);
         this.base_angle = base_angle;
         this.target_angle = target_angle;
         this.base_zoom = base_zoom;

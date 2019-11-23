@@ -40,7 +40,7 @@ public class Global {
     /**
      * The game state.
      */
-    public static GameState state = GameState.INTRO;
+    public static GameState state = GameState.GAME;
 
     /**
      * The layout.
