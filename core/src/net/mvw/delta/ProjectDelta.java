@@ -84,7 +84,7 @@ public class ProjectDelta extends ApplicationAdapter implements Music.OnCompleti
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-            System.out.println("State: "+Global.state);
+            //System.out.println("State: "+Global.state);
 			if(playingTrack == null){
 				playingTrack = getRandomCalmTrack();
 				playingTrack.setOnCompletionListener(this);

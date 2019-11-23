@@ -19,6 +19,10 @@ public class Resources {
     public static Texture panda_neutral;
     public static Texture panda_eating;
     public static Texture panda_grumpy;
+    public static Texture panda_happy;
+    public static Texture golden_bamboo;
+    public static Texture playWood;
+    public static Texture exitWood;
     public static Texture vertex;
     public static Texture banner;
 
@@ -50,6 +54,10 @@ public class Resources {
         vertex = new Texture("images/vertex.png");
         banner = new Texture("images/menu/banner.png");
         panda_grumpy = new Texture("images/pandas/panda_grumpy.png");
+        panda_happy = new Texture("images/pandas/panda_happy.png");
+        golden_bamboo = new Texture("images/bamboos/golden_bamboo.png");
+        exitWood = new Texture("images/menu/exit_level.png");
+        playWood = new Texture("images/menu/play.png");
 
         disposables.add(logo_ProjectDelta);
         disposables.add(logo_SpectralBit);
@@ -60,6 +68,10 @@ public class Resources {
         disposables.add(panda_neutral);
         disposables.add(panda_eating);
         disposables.add(panda_grumpy);
+        disposables.add(panda_happy);
+        disposables.add(golden_bamboo);
+        disposables.add(exitWood);
+        disposables.add(playWood);
         disposables.add(vertex);
 
         for (int i = 1; i <= 3; i++) {

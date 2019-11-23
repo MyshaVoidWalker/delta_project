@@ -1,11 +1,14 @@
 package net.mvw.delta.states.controllers;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import net.mvw.delta.entities.Bamboo;
 import net.mvw.delta.entities.Panda;
 import net.mvw.delta.input.InputBox;
 import net.mvw.delta.input.Resources;
+import net.mvw.delta.logic.SaveManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,12 +26,27 @@ public class GameController {
 
     public static boolean needToShowTutorial = true;
     private static boolean isPanda = false;
-    private static long lastPanda = System.nanoTime(), level = 0;
+    private static long lastPanda = System.nanoTime(), level = 5;
     private static float score = 0, pandas_score = 0;
 
     private static String displayText = "";
 
+    public static Sprite goldenBamboo, level_play_button, level_exit_button;
+
     public static void init() {
+
+        goldenBamboo = new Sprite(Resources.golden_bamboo);
+        goldenBamboo.setOrigin(0, 0);
+        goldenBamboo.setScale(2);
+
+        level_play_button = new Sprite(Resources.playWood);
+        level_play_button.setOrigin(0, 0);
+        level_play_button.setScale(4);
+
+        level_exit_button = new Sprite(Resources.exitWood);
+        level_exit_button.setOrigin(0, 0);
+        level_exit_button.setScale(2);
+
         bamboo_forest.clear();
         if (needToShowTutorial) {
 
@@ -37,8 +55,22 @@ public class GameController {
 
     public static void draw(SpriteBatch batch) {
 
-
+        gamefont.getData().setScale(2f);
         batch.begin();
+
+
+        if (state == GameState.GAME_PROGRESS) {
+            if (level < 10) {
+                displayText = "Parts: " + level + "/10";
+            } else {
+                displayText = "Golden bamboo completed!";
+            }
+
+            goldenBamboo.draw(batch);
+            level_play_button.draw(batch);
+            level_exit_button.draw(batch);
+
+        }
 
         if (state == GameState.GAME) {
             for (Bamboo sprite : bamboo_forest) {
@@ -50,22 +82,26 @@ public class GameController {
             for (Panda traitor : traitors) {
                 traitor.draw(batch);
             }
+            if (level < 10) {
+                displayText = "Score: " + pandas_score + (level<10?("/"+(level+1)*200):"");
+            } else {
+                displayText = "Endless:" + pandas_score;
+            }
+
         }
 
-        if (state == GameState.GAME_PROGRESS){
-
-        }
 
         batch.draw(Resources.banner, 0, SCREEN_HEIGHT + InputBox.yScreenOffset - 256, SCREEN_WIDTH, 256);
-        layout.setText(gamefont, "Score: " + pandas_score);
-        gamefont.draw(batch,    "Score: " + pandas_score, SCREEN_WIDTH / 2 - layout.width / 2, SCREEN_HEIGHT + InputBox.yScreenOffset - 128 + layout.height / 2);
+        layout.setText(gamefont, displayText);
+        gamefont.draw(batch, displayText, SCREEN_WIDTH / 2 - layout.width / 2, SCREEN_HEIGHT + InputBox.yScreenOffset - 128 + layout.height / 2);
         batch.end();
     }
 
     private static long lastBamboo = 0, height_of_sticks = -128;
 
     public static void update() {
-        if (bamboo_forest.size() > 100 && pandas.size() < 10 && System.nanoTime() - lastPanda > 10e8) {
+
+        if (bamboo_forest.size() > 100 && pandas.size() < (level<10?11-level:2) && System.nanoTime() - lastPanda > 10e8) {
             int stick = (int) (Math.random() * bamboo_forest.size());
             Bamboo bamboo = bamboo_forest.get(stick);
             bamboo.setPanda(new Panda(Resources.panda_eating));
@@ -88,7 +124,7 @@ public class GameController {
         while (pandaIterator.hasNext()) {
             Panda panda = pandaIterator.next();
             if (panda.toBeRemoved) {
-                pandas_score += panda.getScaleX();
+                pandas_score += level;
                 Panda traitor = new Panda(Resources.panda_grumpy);
                 traitor.setPosition(panda.getX(), panda.getY());
                 traitor.setScale(panda.getScaleX());
@@ -124,6 +160,27 @@ public class GameController {
             }
         }
 
+        if (level < 10) {
+            goldenBamboo.setColor((level + 1) * 0.09f, (level + 1) * 0.09f, (level + 1) * 0.09f, (level + 1) * 0.09f);
+        } else {
+            goldenBamboo.setColor(Color.WHITE);
+        }
+        goldenBamboo.setPosition(SCREEN_WIDTH / 2 - goldenBamboo.getWidth() / 2 * goldenBamboo.getScaleX(), -InputBox.yScreenOffset - 64);
+        level_play_button.setPosition(SCREEN_WIDTH / 2 - level_play_button.getWidth() / 2 * level_play_button.getScaleX(), SCREEN_HEIGHT * 3 / 5);
+        level_exit_button.setPosition(SCREEN_WIDTH + InputBox.xScreenOffset - level_exit_button.getWidth() * level_exit_button.getScaleX()-32, -InputBox.yScreenOffset+32);
+
+        if(pandas_score>(level+1)*200 && level<10){
+            state = GameState.GAME_PROGRESS;
+            level++;
+            SaveManager.save();
+        }
+
+    }
+
+    public static void resetByLevel(){
+        bamboo_forest.clear();
+        pandas.clear();
+        pandas_score = 0;
     }
 
 }

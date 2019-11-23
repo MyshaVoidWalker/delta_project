@@ -14,15 +14,11 @@ import net.mvw.delta.states.controllers.GameController;
 import java.util.Iterator;
 
 import static net.mvw.delta.ProjectDelta.camera;
+import static net.mvw.delta.input.Resources.playingTrack;
+import static net.mvw.delta.input.Resources.sound_click;
+import static net.mvw.delta.input.Resources.sound_pop;
 import static net.mvw.delta.logic.Global.GameState;
-import static net.mvw.delta.logic.Global.GameState.GAME;
-import static net.mvw.delta.logic.Global.GameState.GAME_PROGRESS;
-import static net.mvw.delta.logic.Global.GameState.INTRO;
-import static net.mvw.delta.logic.Global.GameState.MENU_ACHIEVEMENTS;
-import static net.mvw.delta.logic.Global.GameState.MENU_CREDITS;
-import static net.mvw.delta.logic.Global.GameState.MENU_EXTRAS;
-import static net.mvw.delta.logic.Global.GameState.MENU_MAIN;
-import static net.mvw.delta.logic.Global.GameState.MENU_OPTIONS;
+import static net.mvw.delta.logic.Global.GameState.*;
 import static net.mvw.delta.logic.Global.musicToggle;
 import static net.mvw.delta.logic.Global.soundToggle;
 import static net.mvw.delta.logic.Global.state;
@@ -39,7 +35,6 @@ import static net.mvw.delta.states.controllers.MenuController.playButton;
 import static net.mvw.delta.states.controllers.MenuController.scrollSetYCredits;
 import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonOFF;
 import static net.mvw.delta.states.controllers.MenuController.soundToggleButtonON;
-import static net.mvw.delta.input.Resources.*;
 
 public class InputBox implements InputProcessor, GestureDetector.GestureListener {
 
@@ -83,7 +78,7 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
             return true;
         }
 
-        if (backButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+        if (backButton.getSprite().getBoundingRectangle().contains(touchPos) || GameController.level_exit_button.getBoundingRectangle().contains(touchPos)) {
             SaveManager.save();
             switch (state) {
                 case GAME:
@@ -101,6 +96,13 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         }
 
         if (playButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+            state = GAME_PROGRESS;
+            sound_click.play(masterSoundVolume);
+            return true;
+        }
+
+        if (GameController.level_play_button.getBoundingRectangle().contains(touchPos)) {
+            GameController.resetByLevel();
             state = GAME;
             sound_click.play(masterSoundVolume);
             return true;
@@ -176,11 +178,11 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
         if (state == GameState.GAME) {
             Iterator<Panda> pandaIterator = GameController.pandas.iterator();
-            while(pandaIterator.hasNext()){
+            while (pandaIterator.hasNext()) {
                 Panda panda = pandaIterator.next();
                 if (panda.getBoundingRectangle().contains(touchPos)) {
                     System.out.println("Got panda");
-                   panda.toBeRemoved = true;
+                    panda.toBeRemoved = true;
                     sound_pop.play(masterSoundVolume);
                 }
             }
@@ -411,6 +413,7 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
     }
 
     float deltaDist = 0;
+
     @Override
     public boolean zoom(float initialDistance, float distance) {
         deltaDist = distance - initialDistance;
@@ -423,5 +426,6 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
     }
 
     @Override
-    public void pinchStop() {}
+    public void pinchStop() {
+    }
 }
