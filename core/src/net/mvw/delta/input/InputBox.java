@@ -18,12 +18,17 @@ import static net.mvw.delta.input.Resources.playingTrack;
 import static net.mvw.delta.input.Resources.sound_click;
 import static net.mvw.delta.input.Resources.sound_pop;
 import static net.mvw.delta.logic.Global.GameState;
-import static net.mvw.delta.logic.Global.GameState.*;
+import static net.mvw.delta.logic.Global.GameState.GAME;
+import static net.mvw.delta.logic.Global.GameState.GAME_PROGRESS;
+import static net.mvw.delta.logic.Global.GameState.INTRO;
+import static net.mvw.delta.logic.Global.GameState.MENU_CREDITS;
+import static net.mvw.delta.logic.Global.GameState.MENU_EXTRAS;
+import static net.mvw.delta.logic.Global.GameState.MENU_MAIN;
+import static net.mvw.delta.logic.Global.GameState.MENU_OPTIONS;
 import static net.mvw.delta.logic.Global.musicToggle;
 import static net.mvw.delta.logic.Global.soundToggle;
 import static net.mvw.delta.logic.Global.state;
 import static net.mvw.delta.states.controllers.MenuController.aboutButton;
-import static net.mvw.delta.states.controllers.MenuController.achievementsButton;
 import static net.mvw.delta.states.controllers.MenuController.backButton;
 import static net.mvw.delta.states.controllers.MenuController.creditsButton;
 import static net.mvw.delta.states.controllers.MenuController.exitButton;
@@ -102,10 +107,12 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
         }
 
         if (GameController.level_play_button.getBoundingRectangle().contains(touchPos)) {
-            GameController.resetByLevel();
-            state = GAME;
-            sound_click.play(masterSoundVolume);
-            return true;
+            if (state == GAME_PROGRESS) {
+                GameController.resetByLevel();
+                state = GAME;
+                sound_click.play(masterSoundVolume);
+                return true;
+            }
         }
 
         if (extrasButton.getSprite().getBoundingRectangle().contains(touchPos)) {
@@ -139,11 +146,11 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
             return true;
         }
 
-        if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-            state = MENU_ACHIEVEMENTS;
-            sound_click.play(masterSoundVolume);
-            return true;
-        }
+//        if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+//            state = MENU_ACHIEVEMENTS;
+//            sound_click.play(masterSoundVolume);
+//            return true;
+//        }
 
         if (soundToggleButtonON.getSprite().getBoundingRectangle().contains(touchPos)) {
             soundToggle = false;
@@ -288,12 +295,12 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
                 backButton.hovered = false;
             }
 
-            if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
-                achievementsButton.hovered = true;
-                return true;
-            } else {
-                achievementsButton.hovered = false;
-            }
+//            if (achievementsButton.getSprite().getBoundingRectangle().contains(touchPos)) {
+//                //achievementsButton.hovered = true;
+//                return true;
+//            } else {
+//                achievementsButton.hovered = false;
+//            }
 
             if (aboutButton.getSprite().getBoundingRectangle().contains(touchPos)) {
                 aboutButton.hovered = true;

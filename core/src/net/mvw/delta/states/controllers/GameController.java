@@ -26,8 +26,8 @@ public class GameController {
 
     public static boolean needToShowTutorial = true;
     private static boolean isPanda = false;
-    private static long lastPanda = System.nanoTime(), level = 5;
-    private static float score = 0, pandas_score = 0;
+    public static long lastPanda = System.nanoTime(), level = 0, pandas_score = 0;
+    private static float score = 0;
 
     private static String displayText = "";
 
@@ -68,7 +68,7 @@ public class GameController {
 
             goldenBamboo.draw(batch);
             level_play_button.draw(batch);
-            level_exit_button.draw(batch);
+
 
         }
 
@@ -94,6 +94,7 @@ public class GameController {
         batch.draw(Resources.banner, 0, SCREEN_HEIGHT + InputBox.yScreenOffset - 256, SCREEN_WIDTH, 256);
         layout.setText(gamefont, displayText);
         gamefont.draw(batch, displayText, SCREEN_WIDTH / 2 - layout.width / 2, SCREEN_HEIGHT + InputBox.yScreenOffset - 128 + layout.height / 2);
+        level_exit_button.draw(batch);
         batch.end();
     }
 
@@ -124,7 +125,7 @@ public class GameController {
         while (pandaIterator.hasNext()) {
             Panda panda = pandaIterator.next();
             if (panda.toBeRemoved) {
-                pandas_score += level;
+                pandas_score += (int)((level+1)*panda.getScaleX()*10);
                 Panda traitor = new Panda(Resources.panda_grumpy);
                 traitor.setPosition(panda.getX(), panda.getY());
                 traitor.setScale(panda.getScaleX());
@@ -181,6 +182,7 @@ public class GameController {
         bamboo_forest.clear();
         pandas.clear();
         pandas_score = 0;
+        height_of_sticks = -128;
     }
 
 }

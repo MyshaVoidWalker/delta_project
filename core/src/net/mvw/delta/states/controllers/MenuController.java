@@ -67,7 +67,7 @@ public class MenuController {
         soundToggleButtonOFF = new ScalableEntityUI(new Sprite(Resources.button_f), "Sound: OFF", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 1, MENU_OPTIONS);
         musicToggleButtonOFF = new ScalableEntityUI(new Sprite(Resources.button), "Music: OFF", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 2, MENU_OPTIONS);
 
-        achievementsButton = new ScalableEntityUI(new Sprite(Resources.button), "Achievements", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 0, MENU_EXTRAS);
+     //   achievementsButton = new ScalableEntityUI(new Sprite(Resources.button), "Achievements", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 0, MENU_EXTRAS);
         aboutButton = new ScalableEntityUI(new Sprite(Resources.button_f), "About Us", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 1, MENU_EXTRAS);
         creditsButton = new ScalableEntityUI(new Sprite(Resources.button), "Credits", 0, 0, menuButtonZoom, menuButtonZoomSpeed, 2, MENU_EXTRAS);
 
@@ -85,7 +85,7 @@ public class MenuController {
         uiList.add(soundToggleButtonON);
         uiList.add(soundToggleButtonOFF);
 
-        uiList.add(achievementsButton);
+       // uiList.add(achievementsButton);
 
         uiList.add(creditsButton);
         uiList.add(aboutButton);
