@@ -26,10 +26,11 @@ public class GameController {
 
     public static boolean needToShowTutorial = true;
     private static boolean isPanda = false;
-    public static long lastPanda = System.nanoTime(), level = 0, pandas_score = 0;
+    public static long lastPanda = System.nanoTime(), pandas_score = 0,textTimer = System.nanoTime();
     private static float score = 0;
+    public static int level = 0;
 
-    private static String displayText = "";
+    private static String displayText = "",secondaryText="";
 
     public static Sprite goldenBamboo, level_play_button, level_exit_button;
 
@@ -64,11 +65,21 @@ public class GameController {
                 displayText = "Parts: " + level + "/10";
             } else {
                 displayText = "Golden bamboo completed!";
+
+                batch.draw(Resources.panda_happy,128,SCREEN_HEIGHT/4,256,256);
+                batch.draw(Resources.panda_happy,SCREEN_WIDTH-128,SCREEN_HEIGHT/4,-256,256);
+
             }
 
             goldenBamboo.draw(batch);
             level_play_button.draw(batch);
 
+            layout.setText(gamefont,secondaryText);
+            if(secondaryText!="" && System.nanoTime()-textTimer<10e8*2){
+                gamefont.draw(batch,secondaryText,SCREEN_WIDTH/2-layout.width/2,SCREEN_HEIGHT/2+layout.height/2);
+            }else {
+                secondaryText = new String("");
+            }
 
         }
 
@@ -83,7 +94,7 @@ public class GameController {
                 traitor.draw(batch);
             }
             if (level < 10) {
-                displayText = "Score: " + pandas_score + (level<10?("/"+(level+1)*200):"");
+                displayText = "Score: " + pandas_score + (level<10?("/"+(level+1)*500):"");
             } else {
                 displayText = "Endless:" + pandas_score;
             }
@@ -131,6 +142,7 @@ public class GameController {
                 traitor.setScale(panda.getScaleX());
                 traitors.add(traitor);
                 pandaIterator.remove();
+                lastPanda = System.nanoTime();
             }
         }
 
@@ -170,10 +182,12 @@ public class GameController {
         level_play_button.setPosition(SCREEN_WIDTH / 2 - level_play_button.getWidth() / 2 * level_play_button.getScaleX(), SCREEN_HEIGHT * 3 / 5);
         level_exit_button.setPosition(SCREEN_WIDTH + InputBox.xScreenOffset - level_exit_button.getWidth() * level_exit_button.getScaleX()-32, -InputBox.yScreenOffset+32);
 
-        if(pandas_score>(level+1)*200 && level<10){
+        if(pandas_score>=(level+1)*500 && level<10){
             state = GameState.GAME_PROGRESS;
             level++;
             SaveManager.save();
+            textTimer = System.nanoTime();
+            secondaryText = "New part acquired";
         }
 
     }

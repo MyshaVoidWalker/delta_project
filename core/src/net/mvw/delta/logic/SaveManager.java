@@ -26,10 +26,11 @@ public class SaveManager {
      * Loads the game.
      */
     public static void load() {
-        if (saver.loadDataFrom("saves/save.gamma", "::")) {
+        if (saver.loadDataFrom("saves/save.delta", "::")) {
             GameController.needToShowTutorial = Boolean.parseBoolean(saver.loadVariable("needsTutorial"));
             InputBox.masterSoundVolume = Float.parseFloat(saver.loadVariable("masterSoundVolume"));
             InputBox.masterMusicVolume = Float.parseFloat(saver.loadVariable("masterMusicVolume"));
+            System.out.println("Level: " +saver.loadVariable("player_level"));
             GameController.level = Integer.parseInt(saver.loadVariable("player_level"));
         } else {
             save();
