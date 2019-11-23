@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("LibGDXStaticResource")
 public class Resources {
 
     public static Texture logo_SpectralBit;
@@ -15,6 +16,10 @@ public class Resources {
     public static Texture button;
     public static Texture button_f;
     public static Texture panda_neutral;
+    public static Texture vertex;
+    public static  Texture banner;
+
+    public static ArrayList<Texture> bamboos = new ArrayList<>();
 
 
 //    public static Music track_dayOfChaos; // scorch
@@ -42,6 +47,8 @@ public class Resources {
         button = new Texture("images/menu/button.png");
         button_f = new Texture("images/menu/button_f.png");
         panda_neutral = new Texture("images/pandas/panda_neutral.png");
+        vertex = new Texture("images/vertex.png");
+        banner = new Texture("images/menu/banner.png");
 
         disposables.add(logo_ProjectDelta);
         disposables.add(logo_SpectralBit);
@@ -50,6 +57,13 @@ public class Resources {
         disposables.add(button);
         disposables.add(button_f);
         disposables.add(panda_neutral);
+        disposables.add(vertex);
+
+        for (int i = 1;i<=3;i++){
+            Texture t = new Texture("images/bamboos/bamboo"+i+".png");
+            bamboos.add(t);
+            disposables.add(t);
+        }
 
 
 //        track_dayOfChaos = Gdx.audio.newMusic(Gdx.files.internal("music/Day of Chaos.mp3"));

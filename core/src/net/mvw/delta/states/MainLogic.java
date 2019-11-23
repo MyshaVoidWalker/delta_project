@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import net.mvw.delta.input.InputBox;
 import net.mvw.delta.logic.Global;
+import net.mvw.delta.states.controllers.GameController;
 import net.mvw.delta.states.controllers.IntroController;
 import net.mvw.delta.states.controllers.MenuController;
 
@@ -17,8 +18,9 @@ import static net.mvw.delta.ProjectDelta.viewportWidth;
 import static net.mvw.delta.input.InputBox.continualInputs;
 import static net.mvw.delta.input.Resources.background;
 import static net.mvw.delta.input.Resources.side;
+import static net.mvw.delta.logic.Global.GameState;
 import static net.mvw.delta.logic.Global.state;
-import static net.mvw.delta.logic.Global.*;
+import static net.mvw.delta.logic.Global.timePassed;
 
 
 public class MainLogic {
@@ -45,11 +47,10 @@ public class MainLogic {
 
         IntroController.init();
         MenuController.init();
-        //GameController.init();
+        GameController.init();
 
 
-
-        //GameController.update();
+        GameController.update();
 
     }
 
@@ -59,10 +60,10 @@ public class MainLogic {
         handleVariables();
         updateCameraPosition();
 
-
-        if (state != GameState.INTRO && state != GameState.GAME_PROGRESS) MenuController.update();
-//        if (state == GameState.GAME || state == GameState.GAME_PROGRESS || state == GameState.GAME_BUILDINGS)
-//            GameController.update();
+        if (state != GameState.INTRO && state != GameState.GAME_PROGRESS)
+            MenuController.update();
+        if (state == GameState.GAME || state == GameState.GAME_TUTORIAL || state == GameState.GAME_END || state == GameState.GAME_PROGRESS)
+            GameController.update();
     }
 
 
@@ -99,10 +100,9 @@ public class MainLogic {
             case GAME:
             case GAME_PROGRESS:
             case GAME_END:
-                //GameController.draw(batch);
+            case GAME_TUTORIAL:
+                GameController.draw(batch);
                 break;
-
-
         }
 
         drawOverground(batch);
@@ -113,6 +113,7 @@ public class MainLogic {
 
 
     private static float side_size = 256;
+
     private static void drawBackground(SpriteBatch batch) {
         batch.begin();
 
