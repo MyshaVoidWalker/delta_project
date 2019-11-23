@@ -24,6 +24,9 @@ public class Bamboo extends Sprite {
 
     public void getToTargetAngle(float speed){
         this.setRotation(this.getRotation() + (target_angle - this.getRotation()) /speed * getDelta());
+        if(this.getRotation()/this.target_angle>0.8){
+            this.target_angle = -this.target_angle;
+        }
     }
 
     public void getToZoom(float speed){

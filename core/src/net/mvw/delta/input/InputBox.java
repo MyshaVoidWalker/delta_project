@@ -7,7 +7,11 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import net.mvw.delta.entities.Panda;
 import net.mvw.delta.logic.SaveManager;
+import net.mvw.delta.states.controllers.GameController;
+
+import java.util.Iterator;
 
 import static net.mvw.delta.ProjectDelta.camera;
 import static net.mvw.delta.logic.Global.GameState;
@@ -174,6 +178,14 @@ public class InputBox implements InputProcessor, GestureDetector.GestureListener
 
         if (state == GameState.GAME) {
 
+            Iterator<Panda> pandaIterator = GameController.pandas.iterator();
+            while(pandaIterator.hasNext()){
+                Panda panda = pandaIterator.next();
+                if (panda.getBoundingRectangle().contains(touchPos)) {
+                    System.out.println("Got panda");
+                   panda.toBeRemoved = true;
+                }
+            }
 
             //sound_pop.play(masterSoundVolume);
             return true;
